@@ -2,7 +2,6 @@ streamlit==1.30.0
 pandas==2.1.3
 plotly==5.18.0
 imaplib2==3.06
-email==4.0.2
 matplotlib==3.8.2
 numpy==1.26.3
 pillow==10.1.0
