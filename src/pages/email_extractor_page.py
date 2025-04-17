@@ -184,6 +184,10 @@ def show_email_extractor_page():
                         progress_bar = st.progress(0)
                         status_text = st.empty()
                         
+                        # Show thread mapping message
+                        status_text.text("Analyzing email threads for accurate response tracking...")
+                        progress_bar.progress(25)
+                        
                         # Extract emails with optimized settings
                         emails = extract_emails(
                             email_id=email_id,
@@ -192,7 +196,8 @@ def show_email_extractor_page():
                             end_date=end_date,
                             folder=folder,
                             batch_size=100,  # Process 100 emails at a time
-                            max_emails=3000  # Allow up to 3000 emails
+                            max_emails=3000,  # Allow up to 3000 emails
+                            subject_filter=subject_filter if subject_filter else None
                         )
                         
                         # Update progress
@@ -202,6 +207,14 @@ def show_email_extractor_page():
                         if emails:
                             # Convert to DataFrame
                             df = pd.DataFrame(emails)
+                            
+                            # Apply client-side subject filtering if provided
+                            if subject_filter and not df.empty and 'Subject' in df.columns:
+                                # Case-insensitive subject filtering
+                                df = df[df['Subject'].str.contains(subject_filter, case=False, na=False)]
+                                if df.empty:
+                                    st.warning(f"No emails found with subject containing '{subject_filter}'")
+                                    return
                             
                             # Store in session state
                             st.session_state.extracted_emails = {
@@ -213,8 +226,29 @@ def show_email_extractor_page():
                             # Show success message
                             st.success(f"Successfully extracted {len(df)} emails from {folder} folder")
                             
-                            # Show data preview
-                            st.dataframe(df.head())
+                            # Show data preview in a scrollable container
+                            st.markdown("### Email Data")
+                            st.markdown("""
+                            <style>
+                                .dataframe-container {
+                                    max-height: 400px;
+                                    overflow-y: auto;
+                                    border: 1px solid var(--border-color);
+                                    border-radius: 5px;
+                                    padding: 5px;
+                                }
+                            </style>
+                            """, unsafe_allow_html=True)
+                            
+                            with st.container():
+                                st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
+                                st.dataframe(
+                                    df,
+                                    height=350,
+                                    use_container_width=True,
+                                    hide_index=True
+                                )
+                                st.markdown('</div>', unsafe_allow_html=True)
                             
                             # Add visualization section
                             st.markdown("### 📊 Email Response Analysis")
@@ -343,21 +377,44 @@ def display_extraction_results(df, folder):
             "Status": st.column_config.TextColumn("Response Status")
         }
     
-    # Show dataframe with styled columns
-    st.dataframe(
-        df,
-        column_config=column_config,
-        use_container_width=True,
-        hide_index=True
-    )
+    # Show data preview in a scrollable container
+    st.markdown("""
+    <style>
+        .dataframe-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 5px;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    with st.container():
+        st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
+        st.dataframe(
+            df,
+            column_config=column_config,
+            height=350,
+            use_container_width=True,
+            hide_index=True
+        )
+        st.markdown('</div>', unsafe_allow_html=True)
     
     # Visualization and download section
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        # Provide download link
+        # Provide download link for the displayed data
         filename = f"extracted_emails_{folder}.csv"
-        st.markdown(get_csv_download_link(df, filename), unsafe_allow_html=True)
+        csv_data = df.to_csv(index=False)
+        
+        st.download_button(
+            label="Download CSV",
+            data=csv_data,
+            file_name=filename,
+            mime="text/csv"
+        )
         
         # Show some basic stats
         responded = df[df['Status'] == 'Responded'].shape[0]
