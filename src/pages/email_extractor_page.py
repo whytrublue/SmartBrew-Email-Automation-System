@@ -179,7 +179,7 @@ def show_email_extractor_page():
                         date_range_text += f" to {end_date}"
                     
                     # Extract emails with progress
-                    with st.spinner("Extracting emails..."):
+                    with st.spinner("Extracting Email ids..."):
                         # Create a progress bar
                         progress_bar = st.progress(0)
                         status_text = st.empty()

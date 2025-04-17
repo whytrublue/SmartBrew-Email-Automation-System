@@ -175,8 +175,17 @@ def show_bulk_email_sender_page():
         col1, col2 = st.columns(2)
         with col1:
             executive_name = st.text_input("Executive Name", help="Your name to be included in the email signature")
+            executive_gender = st.radio(
+                "Select Gender",
+                options=["Not Selected", "Male", "Female"],
+                horizontal=True,
+                help="Select gender for appropriate salutation in emails"
+            )
         with col2:
             executive_number = st.text_input("Executive Number", help="Your contact number to be included in the email")
+        
+        # Convert gender selection to format expected by email sender
+        executive_gender = executive_gender.lower() if executive_gender != "Not Selected" else None
         
         # Email content section
         st.markdown("### Email Content")
@@ -187,7 +196,8 @@ def show_bulk_email_sender_page():
             "Select Email Type",
             ["Custom Email/Write Own", "Initial Message - Pads for Freedom", 
              "Follow-up 1 - KHUSHII Pads for Freedom", "Follow-up 2 - KHUSHII Pads for Freedom", 
-             "Follow-up 3 - KHUSHII Pads for Freedom", "Post-Discussion Email - KHUSHII Pads for Freedom"],
+             "Follow-up 3 - KHUSHII Pads for Freedom", "Post-Discussion Email - KHUSHII Pads for Freedom",
+             "Men for Menstruation - KHUSHII Campaign"],
             help="Choose a pre-defined template or create your own",
             key="email_template_type"
         )
@@ -207,7 +217,9 @@ def show_bulk_email_sender_page():
                 default_template = """Dear {name},
 
 As we begin a new financial year, I'm reaching out with a heartfelt invitation - to help us rewrite the future for thousands of young girls in need.
-Every year, 23 million girls in India drop out of school - not because they lack potential, but because they lack access to something as basic as a sanitary pad. Period poverty continues to rob them of education, dignity, and opportunity.
+
+Every year, "23 million girls" in India drop out of school - not because they lack potential, but because they lack access to something as basic as a sanitary pad. Period poverty continues to rob them of education, dignity, and opportunity.
+
 At KHUSHII, we're changing that through our grassroots initiative, Pads for Freedom - where we provide underprivileged schoolgirls with:
 ●	Free biodegradable sanitary pads
 ●	Menstrual & mental health counselling
@@ -216,111 +228,150 @@ At KHUSHII, we're changing that through our grassroots initiative, Pads for Free
 We believe someone like you - who understands the value of equity, opportunity, and action - can play a powerful role in amplifying this mission. Whether through your voice, network, or support, your involvement can spark real change. You can help us build a future where no girl is left behind.
 
 I would be grateful if you could share your contact details, and allow me a quick 5-minute call to take you through the campaign and how you could be part of this transformative journey.
+
 Together, we can ensure no girl ever has to choose between her period and her education.
 
 Looking forward to hearing from you.
 
 Warm regards,
-{Executive Name},
-Campaign Volunteer,Pads for Freedom,
-Team KHUSHII,
-+91 {Executive Number}."""
-            elif email_type == "Follow-up 1 - KHUSHII Pads for Freedom":
-                default_subject = "Just Checking In: A 5-Minute Call Could Change a Girl's Life 💜"
+{Executive Name}
+Campaign Volunteer, Pads for Freedom
+Team KHUSHII
++91 {Executive Number}"""
+            elif email_type == "Men for Menstruation - KHUSHII Campaign":
+                default_subject = "Join the Men for Menstruation Movement 💪 | Breaking Taboos Together – KHUSHII"
                 default_template = """Dear {name},
 
-I hope you're doing well. I'm following up on my previous message about Pads for Freedom—KHUSHII's mission to ensure that no girl drops out of school due to period poverty.
+I hope this email finds you well. I'm reaching out to invite you to be part of a groundbreaking initiative - "Men for Menstruation" by KHUSHII.
 
-Just a quick 5-minute call could help explore how you might support—or even champion—this life-changing cause. Your involvement could make a tangible difference for the girls we serve.
+In India, menstruation remains shrouded in silence and stigma, affecting millions of girls' education and future. While it's often seen as a "women's issue," we believe that men play a crucial role in breaking these taboos and creating lasting change.
 
-Would you be open to a brief call this week? I'd love to share the incredible impact you could help create.
+Why Men for Menstruation?
+● 23 million girls drop out of school annually due to period poverty
+● 71% of girls have no knowledge of menstruation before their first period
+● 88% of women use unsafe alternatives due to lack of access to sanitary products
+
+As a male ally, your voice can:
+1. Challenge deep-rooted stigmas
+2. Encourage open conversations about menstrual health
+3. Inspire other men to support menstrual equity
+4. Help create a more inclusive and understanding society
+
+Our Campaign Goals:
+● Provide biodegradable sanitary pads to 100,000 schoolgirls
+● Conduct menstrual health awareness sessions in 500 schools
+● Train 1000 male educators as menstrual health advocates
+● Create a network of male champions for menstrual equity
+
+Would you be interested in a brief conversation to discuss how you can be part of this transformative movement? Your influence and support could help reshape societal attitudes and ensure no girl misses out on education because of her period.
+
+Together, let's make menstrual health everyone's business.
+
+Looking forward to your positive response.
+
+Best regards,
+{Executive Name}
+Campaign Volunteer, 
+Men for Menstruation
+Team KHUSHII
++91 {Executive Number}
+
+P.S. Every voice matters in breaking the silence. Your participation can inspire many others to join this cause."""
+            elif email_type == "Follow-up 1 - KHUSHII Pads for Freedom":
+                default_subject = "Re: Be the Reason She Stays in School 💜 | Pads for Freedom – KHUSHII"
+                default_template = """Dear {name},
+
+Subject: Just Checking In: A 5-Minute Call Could Change a Girl's Life 💜
+
+I hope this finds you well. I wanted to gently follow up on my earlier email regarding Pads for Freedom, our mission at KHUSHII to help girls stay in school by addressing period poverty.
+
+A quick conversation could go a long way in exploring how you might support or even lead this movement. Your involvement could truly be life-changing for the girls we serve.
+
+Would it be possible to schedule a 5-minute call this week? I'd love to take you through the impact you can create.
 
 Thank you once again for considering this cause.
 
-Best regards,
-{Executive Name},
-Campaign Volunteer,Pads for Freedom,
-Team KHUSHII,
-+91 {Executive Number}."""
+Warm regards,
+{Executive Name}
+Campaign Volunteer, Pads for Freedom
+Team KHUSHII
++91 {Executive Number}"""
             elif email_type == "Follow-up 2 - KHUSHII Pads for Freedom":
-                default_subject = "Imagine Girls Dropping Out of School – Let's Change That 💜"
+                default_subject = "Re: Be the Reason She Stays in School 💜 | Pads for Freedom – KHUSHII"
                 default_template = """Dear {name},
 
-I wanted to circle back because this cause remains incredibly urgent — millions of girls still drop out of school due to something as natural as a period.
+Subject: Imagine Girls Dropping Out of School – Let's Change That 💜
 
-At Pads for Freedom, we believe no girl should lose her education because of shame, silence, or lack of access.
-We're not just giving pads — we're restoring dignity, confidence, and opportunity.
+I wanted to circle back because this cause remains incredibly urgent - millions of girls still drop out of school due to something as natural as a period.
 
-We'd love to have your support — whether it's through your voice, your network, or even a small action.
+At Pads for Freedom, we believe no girl should lose her education because of shame, silence, or lack of access. We're not just giving pads—we're restoring dignity, confidence, and opportunity.
 
-May I set up a quick call to share how you can be a catalyst for change?
+We'd love to have your support—whether it's through your voice, network, or a small action. May I set up a quick call to share how you can be a catalyst for change?
 
 With gratitude,
-{Executive Name},
-Campaign Volunteer,Pads for Freedom,
-Team KHUSHII,
-+91 {Executive Number}."""
+
+{Executive Name}
+Campaign Volunteer, Pads for Freedom
+Team KHUSHII
++91 {Executive Number}"""
             elif email_type == "Follow-up 3 - KHUSHII Pads for Freedom":
-                default_subject = "Still Hoping to Hear From You 💜 – Let's Empower Girls Together"
+                default_subject = "Re: Be the Reason She Stays in School 💜 | Pads for Freedom – KHUSHII"
                 default_template = """Dear {name},
 
-I understand things can get busy, and I truly appreciate you taking the time to read this.
+Subject: Still Hoping to Hear From You 💜 – Let's Empower Girls Together
 
-I just didn't want to close this loop without giving one last nudge — because your support could mean the world to girls who are silently being pushed out of school due to period poverty.
+I understand things can get busy, and I truly appreciate you taking the time to read this. I just didn't want to close this loop without giving one last nudge - because your support could mean the world to girls who are silently being pushed out of school due to period poverty.
 
-Your leadership could help create real, lasting change.
-Even if you're unsure how you'd like to contribute, I'd be happy to walk you through a few simple ways you can get involved.
+Your leadership could help create real, lasting change. Even if you're unsure how you'd like to contribute, I'd be happy to walk you through a few simple ways you can get involved.
 
-If now's not the right time, I completely understand.
-But if there's even a small window, I'd love to connect.
+If now's not the right time, I completely understand. But if there's even a small window, I'd love to connect.
 
 Thank you once again for everything you do.
 
-Best regards,
-{Executive Name},
-Campaign Volunteer,Pads for Freedom,
-Team KHUSHII,
-+91 {Executive Number}."""
+Warm regards,
+
+{Executive Name}
+Campaign Volunteer, Pads for Freedom
+Team KHUSHII
++91 {Executive Number}"""
             elif email_type == "Post-Discussion Email - KHUSHII Pads for Freedom":
-                default_subject = "Post Discussion: Excited to Have You Onboard! | Pads for Freedom 💜"
+                default_subject = "Re: Be the Reason She Stays in School 💜 | Pads for Freedom – KHUSHII"
                 default_template = """Dear {name},
 
-It was truly a pleasure connecting with you — and I'm so grateful for your willingness to support Pads for Freedom.
-Your voice will spark change that ripples far beyond what we can imagine.
+Subject: Post Discussion: Excited to Have You Onboard! | Pads for Freedom 💜
 
-As you know, 23 million girls in India drop out of school each year — not because of a lack of ability, but because of a lack of menstrual hygiene access and awareness.
+It was truly a pleasure connecting with you - and I'm so grateful for your willingness to support Pads for Freedom. Your voice will spark change that ripples far beyond what we can imagine.
 
-With your leadership, we can break the silence and give girls the dignity, confidence, and freedom they deserve.
+As you know, 23 million girls in India drop out of school each year - not for lack of ability, but for lack of menstrual hygiene access and awareness. With your leadership, we shall break this silence and give girls the dignity, confidence, and freedom they deserve.
 
-✨ Let's Get You Started — It's Super Easy!
-Here are a few simple steps to help you lead and champion the cause:
+________________________________________
+✨ Let's get you started! It's Super Easy:
+Here's are the simple steps to you to lead and champion the cause:
+1.	Send us a picture of yourself (we will create your personalized campaign poster).
+2.	Pledge any number of girls you'd like to support (50, 100, 200, or even more)
+3.	We'll send you:
+○	A custom donation link for people to support directly.
+○	A share-ready poster featuring you and your pledge.
+4.	Share your link and poster on WhatsApp and social media (stories, reels, or posts—whatever feels right for you!).
 
-1. Send us a picture of yourself — we'll create your personalized campaign poster.
-2. Pledge any number of girls you'd like to support (50, 100, 200, or more).
-3. We'll send you:
-  ◦ A custom donation link for people to support directly.
-  ◦ A share-ready poster featuring you and your pledge.
-4. Share your link and poster on WhatsApp and social media (stories, reels, or posts — whatever feels right for you!).
+Please know that your pledge is completely flexible - you can always choose to increase or decrease it based on your comfort. There is absolutely no financial obligation attached.
+________________________________________
 
-💡Your pledge is completely flexible. You can always choose to increase or decrease it based on your comfort.
-There is no financial obligation attached — just your voice and intent can make a big difference.
+Why You Matter
+Your involvement isn't just symbolic - it's transformative. You're helping ensure no girl is left behind because of something as natural as her period.
 
-💜 Why You Matter
-Your involvement isn't just symbolic — it's truly transformative.
-You're helping ensure no girl is left behind simply because of something as natural as her period.
+Let's make this year a turning point - for dignity, for education, and for equality.
 
-Let's make this year a turning point — for dignity, for education, and for equality.
+Please share your photo and pledge at your convenience. And if you'd like us to guide you through any of this, we're just a text/call away.
 
-Please feel free to share your photo and pledge at your convenience.
-And if you'd like us to guide you through any of the steps, we're just a call or text away.
+Looking forward to creating a magical impact together!
 
-Looking forward to creating something magical — together.
+Warm regards,
 
-Best regards,
-{Executive Name},
-Campaign Volunteer,Pads for Freedom,
-Team KHUSHII,
-+91 {Executive Number}.
+{Executive Name}
+Campaign Volunteer, Pads for Freedom
+Team KHUSHII
++91 {Executive Number}
 
 PS. We've attached a cost breakdown, showing exactly how ₹1200 per girl is used to provide:
 ●	🌿 Free biodegradable sanitary pads		: ₹ 1104
@@ -345,11 +396,12 @@ PS. We've attached a cost breakdown, showing exactly how ₹1200 per girl is use
             message = st.text_area("Message Body", value=preview_template, height=200, key=f"{email_type.lower().replace(' ', '_')}_message")
         
         # Attachment option
-        st.markdown("### Attachment")
-        attachment_file = st.file_uploader(
-            "Add Attachment (optional)",
+        st.markdown("### Attachments")
+        attachment_files = st.file_uploader(
+            "Add Attachments (optional)",
             type=["pdf", "docx", "jpg", "png"],
-            help="Files must be PDF, DOCX, JPG, or PNG format"
+            accept_multiple_files=True,
+            help="Files must be PDF, DOCX, JPG, or PNG format. You can select multiple files."
         )
         
         # Send button
@@ -359,13 +411,18 @@ PS. We've attached a cost breakdown, showing exactly how ₹1200 per girl is use
         
         if send_button:
             if email_id and app_password:
-                # Handle attachment if uploaded
-                attachment_path = None
-                if attachment_file:
-                    # Create a temporary file to save the uploaded file
-                    with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(attachment_file.name)[1]) as tmp:
-                        tmp.write(attachment_file.getvalue())
-                        attachment_path = tmp.name
+                # Handle attachments if uploaded
+                attachment_paths = []
+                temp_files = []  # Keep track of temp files for cleanup
+                
+                if attachment_files:
+                    for attachment_file in attachment_files:
+                        # Create a temporary file to save the uploaded file
+                        with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(attachment_file.name)[1]) as tmp:
+                            tmp.write(attachment_file.getvalue())
+                            # Store both the temporary path and original filename
+                            attachment_paths.append((tmp.name, attachment_file.name))
+                            temp_files.append(tmp.name)
                 
                 try:
                     if sending_mode == "Single Email":
@@ -387,9 +444,10 @@ PS. We've attached a cost breakdown, showing exactly how ₹1200 per girl is use
                                     subject=subject,
                                     body=message,
                                     cc_email=cc_email,
-                                    attachment_path=attachment_path,
+                                    attachment_paths=attachment_paths if attachment_paths else None,
                                     executive_name=executive_name,
-                                    executive_number=executive_number
+                                    executive_number=executive_number,
+                                    executive_gender=executive_gender
                                 )
                                 
                                 if result.startswith('✅'):
@@ -415,7 +473,9 @@ PS. We've attached a cost breakdown, showing exactly how ₹1200 per girl is use
                                     # Send bulk emails
                                     result = send_bulk_emails(
                                         email_id, app_password, uploaded_file,
-                                        subject, message, cc_email, attachment_path, executive_name, executive_number
+                                        subject, message, cc_email, 
+                                        attachment_paths if attachment_paths else None,
+                                        executive_name, executive_number, executive_gender
                                     )
                                     
                                     # Store in session state
@@ -436,20 +496,20 @@ PS. We've attached a cost breakdown, showing exactly how ₹1200 per girl is use
                                 except Exception as e:
                                     st.error(f"Error sending bulk emails: {str(e)}")
                     
-                    # Clean up temporary file if created
-                    if attachment_path:
+                    # Clean up temporary files
+                    for temp_file in temp_files:
                         try:
-                            os.unlink(attachment_path)
+                            os.unlink(temp_file)
                         except:
                             pass
                             
                 except Exception as e:
                     st.error(f"Error: {str(e)}")
                     
-                    # Clean up temporary file if there was an error
-                    if attachment_path:
+                    # Clean up temporary files if there was an error
+                    for temp_file in temp_files:
                         try:
-                            os.unlink(attachment_path)
+                            os.unlink(temp_file)
                         except:
                             pass
             else:
