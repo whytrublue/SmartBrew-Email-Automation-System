@@ -1,3 +1,17 @@
+"""
+Email Extractor Module for SmartBrew Email Automation System
+Handles extraction of emails from a mailbox based on filters
+"""
+
+import imaplib
+import email
+import pandas as pd
+from email.utils import parseaddr
+from datetime import datetime
+from typing import List, Dict, Optional, Set
+import gc
+import re
+
 def extract_emails(
     email_id: str,
     app_password: str,
@@ -16,7 +30,7 @@ def extract_emails(
         app_password (str): App-specific password
         start_date (datetime, optional): Start date for filtering (inclusive)
         end_date (datetime, optional): End date for filtering (inclusive)
-        folder (str): 'sent', 'inbox', 'failure', or 'delay'
+        folder (str): 'sent' or 'inbox'
         batch_size (int): Number of emails to process in each batch
         max_emails (int, optional): Maximum number of emails to extract
         subject_filter (str, optional): Filter emails by subject keywords
@@ -36,8 +50,6 @@ def extract_emails(
         # Get both sent and inbox to analyze threads
         sent_folder = '"[Gmail]/Sent Mail"'
         inbox_folder = 'inbox'
-        failure_folder = 'Failure'  # Define the Failure folder name
-        delay_folder = 'Delay'      # Define the Delay folder name
 
         # Function to extract message-id and references
         def process_emails_for_threads(mail_folder):
@@ -129,23 +141,12 @@ def extract_emails(
                     print(f"Error processing email for threading: {str(e)}")
                     continue
 
-        # Build thread mapping from both sent and inbox folders
+        # Build thread mapping from both folders
         process_emails_for_threads(sent_folder)
         process_emails_for_threads(inbox_folder)
-        process_emails_for_threads(failure_folder) # Include Failure folder for threading
-        process_emails_for_threads(delay_folder)   # Include Delay folder for threading
 
         # Now extract emails from the requested folder with proper thread tracking
-        if folder.lower() == 'sent':
-            mail.select(sent_folder)
-        elif folder.lower() == 'inbox':
-            mail.select(inbox_folder)
-        elif folder.lower() == 'failure':
-            mail.select(failure_folder)
-        elif folder.lower() == 'delay':
-            mail.select(delay_folder)
-        else:
-            raise ValueError(f"Invalid folder: {folder}. Choose from 'sent', 'inbox', 'failure', or 'delay'.")
+        mail.select(sent_folder if folder.lower() == 'sent' else inbox_folder)
 
         # Build search query
         search_query = []
@@ -255,7 +256,7 @@ def extract_emails(
                         if email_data.get('References') or email_data.get('In-Reply-To'):
                             has_response = True
 
-                    # Process recipient information - This part is crucial for 'sent' folder
+                    # Process recipient information
                     if folder.lower() == 'sent':
                         to_field = email_data.get('To', '')
                         if not to_field:
@@ -285,8 +286,7 @@ def extract_emails(
                             except Exception as e:
                                 print(f"Warning: Error processing recipient {recipient}: {str(e)}")
                                 continue
-                    # Process sender information - This part is crucial for 'inbox', 'failure', and 'delay'
-                    else:
+                    else:  # folder.lower() == 'inbox'
                         from_field = email_data.get('From', '')
                         to_field = email_data.get('To', '') # Get the 'To' field of the received email
                         original_recipient_email = None
