@@ -227,7 +227,7 @@ I would love to discuss this further. Ready to succeed.
 Cheers,
 {Executive Name}
 DB Associate
-+91 {Executive Number}
+
 
 To Suspend future emails type "Terminate"."""
             elif email_type == "Men for Menstruation - KHUSHII Campaign":
