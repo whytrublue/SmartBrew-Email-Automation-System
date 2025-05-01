@@ -195,7 +195,7 @@ def show_bulk_email_sender_page():
         email_type = st.selectbox(
             "Select Email Type",
             ["Custom Email/Write Own", "Initial Message - Does B2b Matters", 
-             "Follow-up 1 - Touchbase with You", "Follow-up 2 - KHUSHII Pads for Freedom", 
+             "Follow-up 1 - Awaiting Response", "Follow-up 2 - KHUSHII Pads for Freedom", 
              "Follow-up 3 - KHUSHII Pads for Freedom", "Post-Discussion Email - KHUSHII Pads for Freedom",
              "Pricing Breakdown"],
             help="Choose a pre-defined template or create your own",
@@ -244,25 +244,15 @@ Regards,
 
 
 P.S. Enter "End" to opt-out."""
-            elif email_type == "Follow-up 1 - KHUSHII Pads for Freedom":
-                default_subject = "Re: Be the Reason She Stays in School 💜 | Pads for Freedom – KHUSHII"
-                default_template = """Dear {name},
+            elif email_type == "Follow-up 1 - Awaiting Response":
+                default_subject = "Re: Awaiting Response"
+                default_template = """Hi {name},
 
-Subject: Just Checking In: A 5-Minute Call Could Change a Girl's Life 💜
+Any updates on our prior conversation?
 
-I hope this finds you well. I wanted to gently follow up on my earlier email regarding Pads for Freedom, our mission at KHUSHII to help girls stay in school by addressing period poverty.
 
-A quick conversation could go a long way in exploring how you might support or even lead this movement. Your involvement could truly be life-changing for the girls we serve.
-
-Would it be possible to schedule a 5-minute call this week? I'd love to take you through the impact you can create.
-
-Thank you once again for considering this cause.
-
-Warm regards,
-{Executive Name}
-Campaign Volunteer, Pads for Freedom
-Team KHUSHII
-+91 {Executive Number}"""
+Thanks,
+{Executive Name}"""
             elif email_type == "Follow-up 2 - KHUSHII Pads for Freedom":
                 default_subject = "Re: Be the Reason She Stays in School 💜 | Pads for Freedom – KHUSHII"
                 default_template = """Dear {name},
