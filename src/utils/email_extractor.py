@@ -10,6 +10,7 @@ from email.utils import parseaddr
 from datetime import datetime
 from typing import List, Dict, Optional, Set
 import gc
+import re
 
 def extract_emails(
     email_id: str,
@@ -189,7 +190,7 @@ def extract_emails(
         for i in range(0, total_emails, batch_size):
             batch = message_numbers[i:i + batch_size]
 
-            # Fetch email headers first
+            # Fetch email content
             for num in batch:
                 try:
                     # Fetch the full email content
@@ -215,8 +216,24 @@ def extract_emails(
                         'From': email_data.get('From', ''),
                         'To': email_data.get('To', ''),
                         'Date': email_data.get('Date', ''),
-                        'Message-ID': email_data.get('Message-ID', '')
+                        'Message-ID': email_data.get('Message-ID', ''),
+                        'Body': '' # Initialize body
                     }
+
+                    # Get the body
+                    if email_data.is_multipart():
+                        for part in email_data.walk():
+                            ctype = part.get_content_type()
+                            cdispo = str(part.get('Content-Disposition'))
+
+                            # Look for the plain text part
+                            if ctype == 'text/plain' and 'attachment' not in cdispo:
+                                body = part.get_payload(decode=True).decode()
+                                email_info['Body'] = body
+                                break # Assuming plain text is sufficient
+                    else:
+                        body = email_data.get_payload(decode=True).decode()
+                        email_info['Body'] = body
 
                     # Check thread status for response
                     has_response = False
@@ -263,7 +280,8 @@ def extract_emails(
                                     'Recipient Email': address,
                                     'Date': email_info['Date'],
                                     'Subject': email_info['Subject'],
-                                    'Status': 'Responded' if has_response else 'Not Responded'
+                                    'Status': 'Responded' if has_response else 'Not Responded',
+                                    'Original Recipient Email': None # Not applicable for sent emails
                                 })
                             except Exception as e:
                                 print(f"Warning: Error processing recipient {recipient}: {str(e)}")
@@ -271,6 +289,18 @@ def extract_emails(
                     else:  # folder.lower() == 'inbox'
                         from_field = email_data.get('From', '')
                         to_field = email_data.get('To', '') # Get the 'To' field of the received email
+                        original_recipient_email = None
+
+                        # If it's a delivery status notification, try to extract the original recipient
+                        subject_lower = email_info['Subject'].lower()
+                        if "delivery status notification" in subject_lower or "delivery incomplete" in subject_lower or "failure" in subject_lower:
+                            email_matches = re.findall(r'[\w\.-]+@[\w\.-]+\.[\w]+', email_info['Body'])
+                            if email_matches:
+                                # Assuming the first valid email found is the original recipient
+                                for match in email_matches:
+                                    if match != email_id and not match.endswith(".bounces.google.com"):
+                                        original_recipient_email = match
+                                        break
 
                         if not from_field:
                             continue
@@ -283,9 +313,6 @@ def extract_emails(
                             if not from_email or "@bounces." in from_email:
                                 continue
 
-                            # For inbox, the 'To' field will be your email address.
-                            # We'll keep it for now, but we might need to enhance this
-                            # to find the original recipient if needed in future.
                             _, to_email = parseaddr(to_field) if to_field else ("", "")
 
                             extracted_emails.append({
@@ -295,7 +322,9 @@ def extract_emails(
                                 'Recipient Email': to_email if to_email else email_id, # Default to your email
                                 'Date': email_info['Date'],
                                 'Subject': email_info['Subject'],
-                                'Status': 'Responded' if has_response else 'Not Responded'
+                                'Status': 'Responded' if has_response else 'Not Responded',
+                                'Original Recipient Email': original_recipient_email,
+                                'Body': email_info['Body']
                             })
                         except Exception as e:
                             print(f"Warning: Error processing sender {from_field}: {str(e)}")
