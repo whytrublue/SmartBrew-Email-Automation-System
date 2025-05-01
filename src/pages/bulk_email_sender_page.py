@@ -195,7 +195,7 @@ def show_bulk_email_sender_page():
         email_type = st.selectbox(
             "Select Email Type",
             ["Custom Email/Write Own", "Initial Message - Does B2b Matters", 
-             "Follow-up 1 - KHUSHII Pads for Freedom", "Follow-up 2 - KHUSHII Pads for Freedom", 
+             "Follow-up 1 - Touchbase with You", "Follow-up 2 - KHUSHII Pads for Freedom", 
              "Follow-up 3 - KHUSHII Pads for Freedom", "Post-Discussion Email - KHUSHII Pads for Freedom",
              "Men for Menstruation - KHUSHII Campaign"],
             help="Choose a pre-defined template or create your own",
@@ -230,45 +230,21 @@ DB Associate
 
 
 To Suspend future emails type "Terminate"."""
-            elif email_type == "Men for Menstruation - KHUSHII Campaign":
-                default_subject = "Join the Men for Menstruation Movement 💪 | Breaking Taboos Together – KHUSHII"
-                default_template = """Dear {name},
+            elif email_type == "Touchbase with You":
+                default_subject = "Touchbase with You"
+                default_template = """Hi {name},
 
-I hope this email finds you well. I'm reaching out to invite you to be part of a groundbreaking initiative - "Men for Menstruation" by KHUSHII.
+Wanted to make sure my previous message didn’t get buried.
 
-In India, menstruation remains shrouded in silence and stigma, affecting millions of girls' education and future. While it's often seen as a "women's issue," we believe that men play a crucial role in breaking these taboos and creating lasting change.
+Excited to hear from you.
 
-Why Men for Menstruation?
-● 23 million girls drop out of school annually due to period poverty
-● 71% of girls have no knowledge of menstruation before their first period
-● 88% of women use unsafe alternatives due to lack of access to sanitary products
 
-As a male ally, your voice can:
-1. Challenge deep-rooted stigmas
-2. Encourage open conversations about menstrual health
-3. Inspire other men to support menstrual equity
-4. Help create a more inclusive and understanding society
 
-Our Campaign Goals:
-● Provide biodegradable sanitary pads to 100,000 schoolgirls
-● Conduct menstrual health awareness sessions in 500 schools
-● Train 1000 male educators as menstrual health advocates
-● Create a network of male champions for menstrual equity
-
-Would you be interested in a brief conversation to discuss how you can be part of this transformative movement? Your influence and support could help reshape societal attitudes and ensure no girl misses out on education because of her period.
-
-Together, let's make menstrual health everyone's business.
-
-Looking forward to your positive response.
-
-Best regards,
+Regards,
 {Executive Name}
-Campaign Volunteer, 
-Men for Menstruation
-Team KHUSHII
-+91 {Executive Number}
 
-P.S. Every voice matters in breaking the silence. Your participation can inspire many others to join this cause."""
+
+P.S. Enter "End" to opt-out."""
             elif email_type == "Follow-up 1 - KHUSHII Pads for Freedom":
                 default_subject = "Re: Be the Reason She Stays in School 💜 | Pads for Freedom – KHUSHII"
                 default_template = """Dear {name},
