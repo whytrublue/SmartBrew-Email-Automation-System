@@ -197,7 +197,7 @@ def show_bulk_email_sender_page():
             ["Custom Email/Write Own", "Initial Message - Does B2b Matters", 
              "Follow-up 1 - Touchbase with You", "Follow-up 2 - KHUSHII Pads for Freedom", 
              "Follow-up 3 - KHUSHII Pads for Freedom", "Post-Discussion Email - KHUSHII Pads for Freedom",
-             "Men for Menstruation - KHUSHII Campaign"],
+             "Pricing Breakdown"],
             help="Choose a pre-defined template or create your own",
             key="email_template_type"
         )
@@ -230,7 +230,7 @@ DB Associate
 
 
 To Suspend future emails type "Terminate"."""
-            elif email_type == "Follow-up 1 - Touchbase with You":
+            elif email_type == "Pricing Breakdown":
                 default_subject = "Re: Touchbase with You"
                 default_template = """Hi {name},
 
