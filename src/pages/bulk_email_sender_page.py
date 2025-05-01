@@ -196,7 +196,7 @@ def show_bulk_email_sender_page():
             "Select Email Type",
             ["Custom Email/Write Own", "Initial Message - Does B2b Matters", 
              "Follow-up 1 - Awaiting Response", "Follow-up 2 - Still Confused", 
-             "Follow-up 3 - Are you Available", "Post-Discussion Email - KHUSHII Pads for Freedom",
+             "Follow-up 3 - Are you Available", "Post-Discussion Email - Need Samples",
              "Pricing Breakdown"],
             help="Choose a pre-defined template or create your own",
             key="email_template_type"
@@ -269,47 +269,20 @@ Are you available to go over our test data?
 
 Thank you once again for your patience.
 
+
 Warm regards,
-
 {Executive Name}"""
-            elif email_type == "Post-Discussion Email - KHUSHII Pads for Freedom":
-                default_subject = "Re: Be the Reason She Stays in School 💜 | Pads for Freedom – KHUSHII"
-                default_template = """Dear {name},
+            elif email_type == "Post-Discussion Email - Need Samples":
+                default_subject = "Re: Need Samples"
+                default_template = """Hi {name},
 
-Subject: Post Discussion: Excited to Have You Onboard! | Pads for Freedom 💜
-
-It was truly a pleasure connecting with you - and I'm so grateful for your willingness to support Pads for Freedom. Your voice will spark change that ripples far beyond what we can imagine.
-
-As you know, 23 million girls in India drop out of school each year - not for lack of ability, but for lack of menstrual hygiene access and awareness. With your leadership, we shall break this silence and give girls the dignity, confidence, and freedom they deserve.
-
-________________________________________
-✨ Let's get you started! It's Super Easy:
-Here's are the simple steps to you to lead and champion the cause:
-1.	Send us a picture of yourself (we will create your personalized campaign poster).
-2.	Pledge any number of girls you'd like to support (50, 100, 200, or even more)
-3.	We'll send you:
-○	A custom donation link for people to support directly.
-○	A share-ready poster featuring you and your pledge.
-4.	Share your link and poster on WhatsApp and social media (stories, reels, or posts—whatever feels right for you!).
-
-Please know that your pledge is completely flexible - you can always choose to increase or decrease it based on your comfort. There is absolutely no financial obligation attached.
-________________________________________
-
-Why You Matter
-Your involvement isn't just symbolic - it's transformative. You're helping ensure no girl is left behind because of something as natural as her period.
-
-Let's make this year a turning point - for dignity, for education, and for equality.
-
-Please share your photo and pledge at your convenience. And if you'd like us to guide you through any of this, we're just a text/call away.
+Would you like to take a look at a sample list to see the quality of contacts? Let me know, and I’ll send it over!
 
 Looking forward to creating a magical impact together!
 
-Warm regards,
 
+Warm regards,
 {Executive Name}
-Campaign Volunteer, Pads for Freedom
-Team KHUSHII
-+91 {Executive Number}
 
 PS. We've attached a cost breakdown, showing exactly how ₹1200 per girl is used to provide:
 ●	🌿 Free biodegradable sanitary pads		: ₹ 1104
