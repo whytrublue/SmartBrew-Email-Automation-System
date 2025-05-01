@@ -194,7 +194,7 @@ def show_bulk_email_sender_page():
         st.markdown("### Email Template")
         email_type = st.selectbox(
             "Select Email Type",
-            ["Custom Email/Write Own", "Initial Message - Pads for Freedom", 
+            ["Custom Email/Write Own", "Initial Message - Does B2b Matters", 
              "Follow-up 1 - KHUSHII Pads for Freedom", "Follow-up 2 - KHUSHII Pads for Freedom", 
              "Follow-up 3 - KHUSHII Pads for Freedom", "Post-Discussion Email - KHUSHII Pads for Freedom",
              "Men for Menstruation - KHUSHII Campaign"],
@@ -212,32 +212,24 @@ def show_bulk_email_sender_page():
             message = st.text_area("Message Body", height=200, key="custom_message")
         else:
             # Get default template content
-            if email_type == "Initial Message - Pads for Freedom":
-                default_subject = "Be the Reason She Stays in School 💜 | Pads for Freedom – KHUSHII"
-                default_template = """Dear {name},
+            if email_type == "Initial Message - Does B2b Matters":
+                default_subject = "Does B2b Matters"
+                default_template = """Hi {name},
 
-As we begin a new financial year, I'm reaching out with a heartfelt invitation - to help us rewrite the future for thousands of young girls in need.
+Transform your Commercial Real Estate approach.
 
-Every year, "23 million girls" in India drop out of school - not because they lack potential, but because they lack access to something as basic as a sanitary pad. Period poverty continues to rob them of education, dignity, and opportunity.
+We've recognized you as a significant influencer in commercial real estate. Our exclusive 15,000+ CRE Email list can greatly enhance your service offerings.
 
-At KHUSHII, we're changing that through our grassroots initiative, Pads for Freedom - where we provide underprivileged schoolgirls with:
-●	Free biodegradable sanitary pads
-●	Menstrual & mental health counselling
-●	Awareness to break stigma and empower choice
+Our Email list has been designed with professionals like you in mind. It has over 95 percent accuracy, which could help streamline your business.
 
-We believe someone like you - who understands the value of equity, opportunity, and action - can play a powerful role in amplifying this mission. Whether through your voice, network, or support, your involvement can spark real change. You can help us build a future where no girl is left behind.
+I would love to discuss this further. Ready to succeed.
 
-I would be grateful if you could share your contact details, and allow me a quick 5-minute call to take you through the campaign and how you could be part of this transformative journey.
-
-Together, we can ensure no girl ever has to choose between her period and her education.
-
-Looking forward to hearing from you.
-
-Warm regards,
+Cheers,
 {Executive Name}
-Campaign Volunteer, Pads for Freedom
-Team KHUSHII
-+91 {Executive Number}"""
+DB Associate
+
+
+To Suspend future emails type "Terminate"."""
             elif email_type == "Men for Menstruation - KHUSHII Campaign":
                 default_subject = "Join the Men for Menstruation Movement 💪 | Breaking Taboos Together – KHUSHII"
                 default_template = """Dear {name},
