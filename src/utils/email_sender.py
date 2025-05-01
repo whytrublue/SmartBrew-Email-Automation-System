@@ -331,11 +331,18 @@ def send_bulk_emails(
                 # Send email
                 server.sendmail(sender_email, all_recipients, msg.as_string())
 
+                success_count += 1
+                last_email = recipient['Email']
+
                 # Add smaller delay for fewer recipients
                 if total_recipients <= 5:
                     time.sleep(0.5)  # 500ms delay for small batches
                 else:
                     time.sleep(1)  # 1 second delay for larger batches
+
+            except Exception as e:
+                print(f"Error sending email to {row['Email']}: {str(e)}")
+                failed_count += 1
 
         # Close SMTP connection
         server.quit()
