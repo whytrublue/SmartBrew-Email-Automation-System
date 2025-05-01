@@ -282,12 +282,7 @@ Looking forward to creating a magical impact together!
 
 
 Warm regards,
-{Executive Name}
-
-PS. We've attached a cost breakdown, showing exactly how ₹1200 per girl is used to provide:
-●	🌿 Free biodegradable sanitary pads		: ₹ 1104
-●	💬 Menstrual and mental health counselling	: ₹     84	
-●	📚 Awareness sessions to keep girls in school	: ₹     12"""
+{Executive Name}"""
             
             # Apply current values to create preview
             preview_template = default_template
