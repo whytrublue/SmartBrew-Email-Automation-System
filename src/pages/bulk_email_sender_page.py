@@ -230,7 +230,7 @@ DB Associate
 
 
 To Suspend future emails type "Terminate"."""
-            elif email_type == "Touchbase with You":
+            elif email_type == "Follow-up 1 - Touchbase with You":
                 default_subject = "Touchbase with You"
                 default_template = """Hi {name},
 
