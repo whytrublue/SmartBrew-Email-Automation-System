@@ -195,7 +195,7 @@ def show_bulk_email_sender_page():
         email_type = st.selectbox(
             "Select Email Type",
             ["Custom Email/Write Own", "Initial Message - Does B2b Matters", 
-             "Follow-up 1 - Awaiting Response", "Follow-up 2 - KHUSHII Pads for Freedom", 
+             "Follow-up 1 - Awaiting Response", "Follow-up 2 - Still Confused", 
              "Follow-up 3 - KHUSHII Pads for Freedom", "Post-Discussion Email - KHUSHII Pads for Freedom",
              "Pricing Breakdown"],
             help="Choose a pre-defined template or create your own",
@@ -253,24 +253,14 @@ Any updates on our prior conversation?
 
 Thanks,
 {Executive Name}"""
-            elif email_type == "Follow-up 2 - KHUSHII Pads for Freedom":
-                default_subject = "Re: Be the Reason She Stays in School 💜 | Pads for Freedom – KHUSHII"
+            elif email_type == "Follow-up 2 - Still Confused":
+                default_subject = "Re: Still Confused"
                 default_template = """Dear {name},
 
-Subject: Imagine Girls Dropping Out of School – Let's Change That 💜
+Have an industry in mind? We're experts, ready to fuel your growth within your chosen field.
 
-I wanted to circle back because this cause remains incredibly urgent - millions of girls still drop out of school due to something as natural as a period.
-
-At Pads for Freedom, we believe no girl should lose her education because of shame, silence, or lack of access. We're not just giving pads—we're restoring dignity, confidence, and opportunity.
-
-We'd love to have your support—whether it's through your voice, network, or a small action. May I set up a quick call to share how you can be a catalyst for change?
-
-With gratitude,
-
-{Executive Name}
-Campaign Volunteer, Pads for Freedom
-Team KHUSHII
-+91 {Executive Number}"""
+Best,
+{Executive Name}"""
             elif email_type == "Follow-up 3 - KHUSHII Pads for Freedom":
                 default_subject = "Re: Be the Reason She Stays in School 💜 | Pads for Freedom – KHUSHII"
                 default_template = """Dear {name},
