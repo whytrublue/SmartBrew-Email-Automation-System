@@ -196,7 +196,7 @@ def show_bulk_email_sender_page():
             "Select Email Type",
             ["Custom Email/Write Own", "Initial Message - Does B2b Matters", 
              "Follow-up 1 - Awaiting Response", "Follow-up 2 - Still Confused", 
-             "Follow-up 3 - KHUSHII Pads for Freedom", "Post-Discussion Email - KHUSHII Pads for Freedom",
+             "Follow-up 3 - Are you Available", "Post-Discussion Email - KHUSHII Pads for Freedom",
              "Pricing Breakdown"],
             help="Choose a pre-defined template or create your own",
             key="email_template_type"
@@ -261,26 +261,17 @@ Have an industry in mind? We're experts, ready to fuel your growth within your c
 
 Best,
 {Executive Name}"""
-            elif email_type == "Follow-up 3 - KHUSHII Pads for Freedom":
-                default_subject = "Re: Be the Reason She Stays in School 💜 | Pads for Freedom – KHUSHII"
-                default_template = """Dear {name},
+            elif email_type == "Follow-up 3 - Are you Available":
+                default_subject = "Re: Are you Available"
+                default_template = """Hi {name},
 
-Subject: Still Hoping to Hear From You 💜 – Let's Empower Girls Together
+Are you available to go over our test data?
 
-I understand things can get busy, and I truly appreciate you taking the time to read this. I just didn't want to close this loop without giving one last nudge - because your support could mean the world to girls who are silently being pushed out of school due to period poverty.
-
-Your leadership could help create real, lasting change. Even if you're unsure how you'd like to contribute, I'd be happy to walk you through a few simple ways you can get involved.
-
-If now's not the right time, I completely understand. But if there's even a small window, I'd love to connect.
-
-Thank you once again for everything you do.
+Thank you once again for your patience.
 
 Warm regards,
 
-{Executive Name}
-Campaign Volunteer, Pads for Freedom
-Team KHUSHII
-+91 {Executive Number}"""
+{Executive Name}"""
             elif email_type == "Post-Discussion Email - KHUSHII Pads for Freedom":
                 default_subject = "Re: Be the Reason She Stays in School 💜 | Pads for Freedom – KHUSHII"
                 default_template = """Dear {name},
