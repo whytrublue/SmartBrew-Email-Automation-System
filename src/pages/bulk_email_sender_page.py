@@ -231,13 +231,12 @@ DB Associate
 
 To Suspend future emails type "Terminate"."""
             elif email_type == "Follow-up 1 - Touchbase with You":
-                default_subject = "Touchbase with You"
+                default_subject = "Re: Touchbase with You"
                 default_template = """Hi {name},
 
 Wanted to make sure my previous message didn’t get buried.
 
 Excited to hear from you.
-
 
 
 Regards,
