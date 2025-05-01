@@ -1,6 +1,3 @@
-https://github.com/whytrublue/SmartBrew-Email-Automation-System/edit/main/src/utils/email_sender.py
-
-
 """
 Email Sender Module for SmartBrew Email Automation System
 Handles sending of individual and bulk emails
