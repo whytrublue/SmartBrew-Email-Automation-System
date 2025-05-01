@@ -334,9 +334,11 @@ def send_bulk_emails(
                 success_count += 1
                 last_email = recipient['Email']
 
-                # Add the delay here
-                # Pause for a random duration between 90 and 120 seconds (2 minutes)
-                time.sleep(random.uniform(90, 120))
+                # Add smaller delay for fewer recipients
+                if total_recipients <= 30:
+                    time.sleep(90)  # 90 second delay for small batches
+                else:
+                    time.sleep(60)  # 60 second delay for larger batches
 
             except Exception as e:
                 print(f"Error sending email to {row['Email']}: {str(e)}")
